@@ -72,6 +72,16 @@ app.get("/services/:id", async(req, res)=>{
   res.send(result)
 })
 
+app.patch("/services/:id", async(req, res)=>{
+  const id = req.params.id;
+  const query= {_id: new ObjectId(id)};
+  const updateDoc= {
+    $set: req.body
+  }
+  const result = await services.updateOne(query, updateDoc);
+  res.send(result);
+})
+
 //booking api
 
 app.post("/bookings", async(req, res)=>{
