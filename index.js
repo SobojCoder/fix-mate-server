@@ -50,6 +50,9 @@ app.get("/services", async(req, res)=>{
   if(req.query.serviceMode){
     query.serviceMode = req.query.serviceMode
   }
+  if(req.query.technicianEmail){
+    query.technicianEmail = req.query.technicianEmail
+  }
    if (req.query.search) {
     query.$or = [
       { title: { $regex: req.query.search, $options: "i" } },
@@ -78,9 +81,14 @@ app.post("/bookings", async(req, res)=>{
   res.send(result);
 })
 
-app.get("/bookings/:id", async(req, res)=>{
-  const id = req.params.id;
-  const result = await bookings.findOne({_id: new ObjectId(id)})
+app.get("/bookings", async(req, res)=>{
+  const query ={}
+
+  if(req.query.applicantId){
+    query.applicantId = req.query.applicantId;
+  }
+  const result = await bookings.find(query).toArray()
+  res.send(result)
 })
 
 app.listen(PORT, ()=>{
