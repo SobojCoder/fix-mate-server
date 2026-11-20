@@ -82,6 +82,13 @@ app.patch("/services/:id", async(req, res)=>{
   res.send(result);
 })
 
+app.delete("/services/:id", async(req, res)=>{
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)};
+  const result = await services.deleteOne(query);
+  res.send(result);
+})
+
 //booking api
 
 app.post("/bookings", async(req, res)=>{
